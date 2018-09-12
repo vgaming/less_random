@@ -8,6 +8,14 @@ local wml = wml
 local T = wesnoth.require("lua/helper.lua").set_wml_tag_metatable {}
 
 
+local function remove_object(unit)
+	wesnoth.remove_modifications(unit, { id = "lessrandom_hp" })
+	if (unit.variables.lessrandom) then
+		unit.hitpoints = unit.hitpoints / wml.variables.lessrandom_multiplier
+		unit.variables.lessrandom = false
+	end
+end
+
 local function add_object(unit)
 	wesnoth.add_modification(unit, "object", {
 		id = "lessrandom_hp",
@@ -26,11 +34,7 @@ end
 
 function lessrandom.side_turn_event()
 	for _, unit in ipairs(wesnoth.get_units { side = wesnoth.current.side }) do
-		wesnoth.remove_modifications(unit, { id = "lessrandom_hp" })
-		if (unit.variables.lessrandom) then
-			unit.hitpoints = unit.hitpoints / wml.variables.lessrandom_multiplier
-			unit.variables.lessrandom = false
-		end
+		remove_object(unit)
 	end
 end
 
@@ -42,6 +46,7 @@ end
 
 function lessrandom.unit_placed_event()
 	local unit = wesnoth.get_unit(wml.variables.x1, wml.variables.y1  )
+	remove_object(unit)
 	add_object(unit)
 end
 
