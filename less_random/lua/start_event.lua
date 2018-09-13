@@ -9,6 +9,8 @@ if wml.variables.lessrandom_multiplier == 1 then
 	return
 end
 
+lessrandom.start_initialize()
+
 wesnoth.wml_actions.event {
 	first_time_only = false,
 	name = "side turn",

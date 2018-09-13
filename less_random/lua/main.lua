@@ -15,6 +15,7 @@ local function remove_object(unit)
 		unit.variables.lessrandom = false
 	end
 end
+lessrandom.remove_object = remove_object
 
 local function add_object(unit)
 	wesnoth.add_modification(unit, "object", {
@@ -31,6 +32,13 @@ local function add_object(unit)
 	})
 	unit.variables.lessrandom = true
 end
+lessrandom.add_object = add_object
+
+function lessrandom.start_initialize()
+	for _, unit in ipairs(wesnoth.get_units {}) do
+		add_object(unit)
+	end
+end
 
 function lessrandom.side_turn_event()
 	for _, unit in ipairs(wesnoth.get_units { side = wesnoth.current.side }) do
@@ -45,9 +53,11 @@ function lessrandom.turn_refresh_event()
 end
 
 function lessrandom.unit_placed_event()
-	local unit = wesnoth.get_unit(wml.variables.x1, wml.variables.y1  )
-	remove_object(unit)
-	add_object(unit)
+	local unit = wesnoth.get_unit(wml.variables.x1, wml.variables.y1)
+	if unit then
+		remove_object(unit)
+		add_object(unit)
+	end
 end
 
 
