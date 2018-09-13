@@ -1,7 +1,9 @@
 Reduce randomness by having more HP and more strikes.
 
+The effect on statistics is the same as letting the game last N times longer -- only you'll have the desired effect even at the very early deciding battles.
+Poison and healing effect is increased proportionally.
 
-Different rules make up for a different game and play style.
+Beware, different rules make up for a different game and play style.
 Be prepared to re-consider your tactics.
 
 
