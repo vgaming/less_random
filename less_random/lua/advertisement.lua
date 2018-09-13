@@ -6,10 +6,10 @@ local ipairs = ipairs
 
 local addon_name = tostring((...).name)
 local addon_dir = tostring((...).dir)
-local filename = "~add-ons/" .. addon_dir .. "/target/version.txt"
 local addon_about = tostring((...).about)
 local addon_icon = tostring((...).icon)
 
+local filename = "~add-ons/" .. addon_dir .. "/target/version.txt"
 local function human_ver()
 	if wesnoth.have_file(filename) then
 		return { v = wesnoth.read_file(filename) }
@@ -26,7 +26,7 @@ end
 local highest_version = "0.0.0"
 for side_number in ipairs(wesnoth.sides) do
 	local side_version = wesnoth.synchronize_choice(human_ver, ai_ver, side_number).v
-	print("side", side_number, "ver", side_version)
+	print(addon_dir, "side", side_number, "has version", side_version)
 	if wesnoth.compare_versions(side_version, ">", highest_version) then
 		highest_version = side_version
 	end
