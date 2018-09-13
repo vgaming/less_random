@@ -49,7 +49,7 @@ else
 	advertisement = "🠉🠉🠉 Please upgrade your " .. addon_name .. " add-on 🠉🠉🠉"
 		.. "\n"
 		.. my_version .. " -> " .. highest_version
-		.. "\n\n"
+		.. "  (you may do that after the game)\n\n"
 end
 
 wesnoth.wml_actions.message {
