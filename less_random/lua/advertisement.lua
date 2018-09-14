@@ -1,8 +1,8 @@
 -- << less_random/new_ad
 
 local wesnoth = wesnoth
-local tostring = tostring
 local ipairs = ipairs
+local tostring = tostring
 
 local addon_name = tostring((...).name)
 local addon_dir = tostring((...).dir)
@@ -23,12 +23,17 @@ local function ai_ver()
 end
 
 
+local human_sides = {}
+for _, side in ipairs(wesnoth.sides) do
+	if side.__cfg.allow_player then human_sides[#human_sides + 1] = side.side end
+end
+
+local sync_choices = wesnoth.synchronize_choices(human_ver, ai_ver, human_sides)
+
 local highest_version = "0.0.0"
-for side_number in ipairs(wesnoth.sides) do
-	local side_version = wesnoth.synchronize_choice(human_ver, ai_ver, side_number).v
-	--print(addon_dir, "side", side_number, "has version", side_version)
-	if wesnoth.compare_versions(side_version, ">", highest_version) then
-		highest_version = side_version
+for _, side_version in pairs(sync_choices) do
+	if wesnoth.compare_versions(side_version.v, ">", highest_version) then
+		highest_version = side_version.v
 	end
 end
 
@@ -45,6 +50,7 @@ if my_version == "0.0.0" then
 		.. "If you'll like it, feel free to install it from add-ons server."
 		.. "\n\n"
 		.. "======================\n\n"
+		.. addon_about
 else
 	advertisement = "🠉🠉🠉 Please upgrade your " .. addon_name .. " add-on 🠉🠉🠉"
 		.. "\n"
@@ -54,7 +60,7 @@ end
 
 wesnoth.wml_actions.message {
 	caption = addon_name,
-	message = advertisement .. addon_about,
+	message = advertisement,
 	image = addon_icon,
 }
 
