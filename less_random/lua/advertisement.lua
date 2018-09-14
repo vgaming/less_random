@@ -26,7 +26,7 @@ end
 local highest_version = "0.0.0"
 for side_number in ipairs(wesnoth.sides) do
 	local side_version = wesnoth.synchronize_choice(human_ver, ai_ver, side_number).v
-	print(addon_dir, "side", side_number, "has version", side_version)
+	--print(addon_dir, "side", side_number, "has version", side_version)
 	if wesnoth.compare_versions(side_version, ">", highest_version) then
 		highest_version = side_version
 	end
