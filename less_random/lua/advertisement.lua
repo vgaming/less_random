@@ -1,4 +1,4 @@
--- << less_random/new_ad
+-- << less_random/advertisement
 
 local wesnoth = wesnoth
 local ipairs = ipairs

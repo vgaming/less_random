@@ -3,6 +3,7 @@
 lessrandom = {}
 local lessrandom = lessrandom
 local ipairs = ipairs
+local math = math
 local wesnoth = wesnoth
 local wml = wml
 local on_event = wesnoth.require("lua/on_event.lua")
@@ -59,9 +60,6 @@ local function turn_refresh_event()
 		local hp = unit.hitpoints
 		local enforce_max = math.max(hp, unit.max_hitpoints)
 		local heal_diff = hp - (unit.variables.lessrandom_hp_before or hp)
-		if heal_diff ~= 0 then
-			print_as_json("changing HP", unit.id, heal_diff)
-		end
 		local new_hp = hp + heal_diff * wml.variables.lessrandom_multiplier
 		unit.hitpoints = math.max(1, math.min(enforce_max, new_hp))
 		add_object(unit)
