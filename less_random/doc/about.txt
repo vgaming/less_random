@@ -1,10 +1,4 @@
 Reduce randomness by having more HP and more strikes.
 
-The effect on statistics is the same as letting the game last N times longer -- only you'll have the desired effect even at the very early deciding battles.
-Poison and healing effect is increased proportionally.
-
-Beware, different rules make up for a different game and play style.
-Be prepared to re-consider your tactics.
-
-
-P.S. Don't hope to survive an attack having 1 HP with this add-on...;-)
+Poison, healing and village effect is increased as well.
+Mostly the game should feel the same once you start playing it -- with a few tactics changed, however.
