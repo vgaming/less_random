@@ -13,27 +13,21 @@ if wml.variables.lessrandom_multiplier == 1 then
 end
 
 local function remove_object(unit)
+	unit.variables.lessrandom_init = nil
 	wesnoth.wml_actions.remove_object {
-		object_id = "lessrandom_hp",
+		object_id = "lessrandom",
 		id = unit.id
 	}
-	if unit.variables.lessrandom_is_boosted then
-		unit.variables.lessrandom_is_boosted = nil
-		unit.variables.lessrandom_hp_was = unit.hitpoints
-		unit.hitpoints = unit.hitpoints / wml.variables.lessrandom_multiplier
-		unit.variables.lessrandom_reduced = unit.hitpoints
-	end
 end
+
 lessrandom.remove_object = remove_object
 
 local function add_object(unit)
-	remove_object(unit)
-	-- print("adding object to", unit.id)
-
-	local hitpoints_after_turn_effects = unit.hitpoints
+	if unit.variables.lessrandom_init then return end
+	unit.variables.lessrandom_init = true
 	wesnoth.wml_actions.object {
-		T.filter {id = unit.id},
-		id = "lessrandom_hp",
+		T.filter { id = unit.id },
+		id = "lessrandom",
 		take_only_once = false,
 		T.effect {
 			apply_to = "hitpoints",
@@ -45,13 +39,6 @@ local function add_object(unit)
 			increase_attacks = (wml.variables.lessrandom_multiplier - 1) .. "00%",
 		},
 	}
-	if unit.variables.lessrandom_hp_was then
-		unit.hitpoints = unit.variables.lessrandom_hp_was
-			+ (hitpoints_after_turn_effects - unit.variables.lessrandom_reduced)
-			* wml.variables.lessrandom_multiplier
-		unit.variables.lessrandom_hp_was = nil
-	end
-	unit.variables.lessrandom_is_boosted = true
 end
 lessrandom.add_object = add_object
 
@@ -63,12 +50,20 @@ end
 
 local function side_turn_event()
 	for _, unit in ipairs(wesnoth.get_units {}) do
-		remove_object(unit)
+		unit.variables.lessrandom_hp_before = unit.hitpoints
 	end
 end
 
 local function turn_refresh_event()
 	for _, unit in ipairs(wesnoth.get_units {}) do
+		local hp = unit.hitpoints
+		local enforce_max = math.max(hp, unit.max_hitpoints)
+		local heal_diff = hp - (unit.variables.lessrandom_hp_before or hp)
+		if heal_diff ~= 0 then
+			print_as_json("changing HP", unit.id, heal_diff)
+		end
+		local new_hp = hp + heal_diff * wml.variables.lessrandom_multiplier
+		unit.hitpoints = math.max(1, math.min(enforce_max, new_hp))
 		add_object(unit)
 	end
 end
