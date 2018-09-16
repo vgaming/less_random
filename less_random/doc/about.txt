@@ -1,4 +1,4 @@
 Reduce randomness by having more HP and more strikes.
 
 Poison, healing and village effect is increased as well.
-The game should mostly feel the same -- with a few tactics changed, however.
+Game should mostly feel the same -- with a few tactics changed, however.
