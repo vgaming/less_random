@@ -54,15 +54,13 @@ on_event("turn 2", function()
 	end
 	if rawget(_G, "print_as_json") then _G.print_as_json("addon versions", addon_name, log) end
 
-	if my_version == highest_version then
-		return
+	if my_version ~= highest_version then
+		local advertisement = "🠉🠉🠉 Please upgrade your " .. addon_name .. " add-on 🠉🠉🠉"
+			.. "\n"
+			.. my_version .. " -> " .. highest_version
+			.. "  (you may do that after the game)\n\n"
+		show_message(advertisement)
 	end
-
-	local advertisement = "🠉🠉🠉 Please upgrade your " .. addon_name .. " add-on 🠉🠉🠉"
-		.. "\n"
-		.. my_version .. " -> " .. highest_version
-		.. "  (you may do that after the game)\n\n"
-	show_message(advertisement)
 end)
 
 
