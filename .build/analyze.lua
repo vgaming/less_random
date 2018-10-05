@@ -16,8 +16,6 @@ end
 
 _G.cnk = cnk
 
-print(cnk(1,1))
-
 local function prob(fract, strikes)
 	local result = 1
 	for need = 0, math.ceil(strikes * fract) - 1 do

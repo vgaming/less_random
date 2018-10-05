@@ -60,7 +60,7 @@ local function turn_refresh_event()
 		local hp = unit.hitpoints
 		local enforce_max = math.max(hp, unit.max_hitpoints)
 		local heal_diff = hp - (unit.variables.lessrandom_hp_before or hp)
-		local new_hp = hp + heal_diff * wml.variables.lessrandom_multiplier
+		local new_hp = hp + heal_diff * (wml.variables.lessrandom_multiplier - 1)
 		unit.hitpoints = math.max(1, math.min(enforce_max, new_hp))
 		add_object(unit)
 	end
