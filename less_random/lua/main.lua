@@ -1,4 +1,10 @@
--- << lessrandom/main.lua
+-- << main | less_random
+if rawget(_G, "main | less_random") then
+	-- TODO: remove this code once https://github.com/wesnoth/wesnoth/issues/8157 is fixed
+	return
+else
+	rawset(_G, "main | less_random", true)
+end
 
 lessrandom = {}
 local lessrandom = lessrandom
@@ -7,7 +13,7 @@ local math = math
 local wesnoth = wesnoth
 local wml = wml
 local on_event = wesnoth.require("lua/on_event.lua")
-local T = wesnoth.require("lua/helper.lua").set_wml_tag_metatable {}
+local T = wml.tag
 
 if wml.variables.lessrandom_multiplier == 1 then
 	return
