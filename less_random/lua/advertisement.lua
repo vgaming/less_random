@@ -1,10 +1,4 @@
 -- << advertisement | less_random
-if rawget(_G, "advertisement | less_random") then
-	-- TODO: remove this code once https://github.com/wesnoth/wesnoth/issues/8157 is fixed
-	return
-else
-	rawset(_G, "advertisement | less_random", true)
-end
 
 local wesnoth = wesnoth
 local string = string

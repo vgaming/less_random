@@ -1,10 +1,4 @@
 -- << json_format | less_random
-if rawget(_G, "json_format | less_random") then
-	-- TODO: remove this code once https://github.com/wesnoth/wesnoth/issues/8157 is fixed
-	return
-else
-	rawset(_G, "json_format | less_random", true)
-end
 
 -- wesnoth.dofile("~add-ons/less_random/lua/json_format.lua")
 
