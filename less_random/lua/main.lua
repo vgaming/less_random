@@ -29,7 +29,7 @@ local function add_object(unit)
 	wesnoth.wml_actions.object {
 		T.filter { id = unit.id },
 		id = "lessrandom",
-		take_only_once = false,
+		take_only_once = true,
 		T.effect {
 			apply_to = "hitpoints",
 			increase_total = (wml.variables.lessrandom_multiplier - 1) .. "00%",
