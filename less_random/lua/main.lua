@@ -13,18 +13,6 @@ if wml.variables.lessrandom_multiplier == 1 then
 	return
 end
 
-local function has_object(unit, obj_id)
-	-- Check if unit already has this object modification by ID
-	if not unit then return false end
-
-	-- Primary check: variable flag (most reliable)
-	if unit.variables.lessrandom_init then
-		return true
-	end
-
-	return false
-end
-
 local function remove_object(unit)
 	if not unit or not unit.id then return end
 	unit.variables.lessrandom_init = nil
@@ -39,16 +27,9 @@ end
 lessrandom.remove_object = remove_object
 
 local function add_object(unit)
-	-- Validate unit exists
-	if not unit then
-		return
-	end
-
-	-- CRITICAL: Check unit.id exists and is valid
-	-- In 1.18, unit.id might not be available immediately after recruitment
-	if not unit.id or unit.id == "" then
-		-- If ID is not available, we can't apply the object
-		-- This might happen for newly recruited units - they will be handled in turn_refresh
+	if not unit or not unit.id or unit.id == "" then
+		-- In 1.18, unit.id might not be available immediately after recruitment.
+		-- Such units will be handled in turn_refresh
 		return
 	end
 
@@ -59,13 +40,16 @@ local function add_object(unit)
 
 	-- Use unique object ID per unit
 	-- Replace problematic characters (like dashes) that might cause "Invalid id=" error
-	local safe_unit_id = tostring(unit.id):gsub("-", "_"):gsub(" ", "_")
+	local safe_unit_id = tostring(unit.id):gsub("[^a-zA-Z0-9]", "_")
 	local obj_id = "lessrandom_" .. safe_unit_id
 
 	-- Mark as initialized BEFORE applying to prevent race conditions
+	--
+	-- Note: this comment was taken from Less Random Fork. The current maintainer of Less Random
+	-- does not know what this means. Wesnoth's Lua context is single-threaded, after all.
+	-- Let's keep it as-is since the add-on seems to be working.
 	unit.variables.lessrandom_init = true
 
-	-- Use WML action like original - it handles parsing correctly
 	-- Calculate percentage: if multiplier is 10, we want 900% increase (10x total)
 	-- Formula: (multiplier - 1) * 100 = percentage increase
 	local multiplier = wml.variables.lessrandom_multiplier or 3
