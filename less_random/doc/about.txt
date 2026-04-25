@@ -1,3 +1,7 @@
 Reduce randomness by having more HP and more strikes.
 
 Poison, healing and village effect is increased as well. Game should mostly feel the same -- with a few tactics changed, however.
+
+This version merges the changes from Less Random Fork by Constantine Menshenin back upstream. Note to Constantine Menshenin: I'd be happy to collaborate instead of forking and then merging silently through the add-ons server. Please feel free to reach out on github or discord.
+
+https://github.com/vgaming/less_random/
